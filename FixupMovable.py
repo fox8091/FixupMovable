@@ -17,11 +17,11 @@ def main(argv):
     try:
         if len(argv) < 2:
             return syntax()
-        with open(argv[1], mode="rb") as f:
+        with open(argv[1], mode="rb+") as f:
             movableBytes = bytearray(f.read())
-            f.close()
-        with open(argv[1], mode="wb") as f:
+            f.seek(0)
             f.write(patchMovable(movableBytes))
+            f.truncate()
         return 0
     except Exception as e:
         print(str(e))
